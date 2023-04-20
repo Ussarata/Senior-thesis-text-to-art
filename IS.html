@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Ussama Mustafa - Illustrated Storybook Generation</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+      
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+    <script>
+      // Your Firebase configuration
+      var firebaseConfig = {
+      apiKey: "AIzaSyDVVd0a41BdBormKtfX3_e0R6ewfNnR3u8",
+      authDomain: "senioris-fc332.firebaseapp.com",
+      databaseURL: "https://senioris-fc332-default-rtdb.firebaseio.com",
+      projectId: "senioris-fc332",
+      storageBucket: "senioris-fc332.appspot.com",
+      messagingSenderId: "81587613339",
+      appId: "1:81587613339:web:1cf0c066b8b17f51c3603e",
+      measurementId: "G-QKVWM868MD"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var storage = firebase.storage();
+    </script>
+  </head>
+
+  <body>
+
+    <div class="center">
+        <h1>Ussama Mustafa - Illustrated Storybook Generation</h1>
+        <h1 id="text-generation-model">Text Generation Model</h1>
+        <iframe
+          src="https://ussarata-storygen.hf.space"
+          frameborder="0"
+          width="850"
+          height="550"
+        ></iframe>
+    </div>
+
+    <div class="center">
+        <h1 id="Art-generation-model">Image Generation Model</h1>
+        <iframe
+          src="https://221hcefr652-496ff2e9c6d22116-7860-colab.googleusercontent.com"
+          frameborder="0"
+          width="850"
+          height="550"
+        ></iframe>
+    </div>
+
+    <div id="images">
+        <h1>Generated images</h1>
+    </div>
+
+    <script>
+      // Reference to your Firebase Storage
+      var storageRef = storage.ref();
+
+      // Get all images in your Firebase Storage
+      storageRef.listAll().then(function(result) {
+        result.items.forEach(function(imageRef) {
+          // Get the download URL for each image
+          imageRef.getDownloadURL().then(function(url) {
+            // Create a container for each image
+            var imageContainer = document.createElement("div");
+            imageContainer.className = "image-container";
+
+            // Create an <img> element for each image
+            var img = document.createElement("img");
+            img.src = url;
+            imageContainer.appendChild(img);
+
+            // Create a title for each image
+            var title = document.createElement("h3");
+            title.innerHTML = imageRef.name;
+            imageContainer.appendChild(title);
+
+            // Add the image and its title to the page
+            document.getElementById("images").appendChild(imageContainer);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
